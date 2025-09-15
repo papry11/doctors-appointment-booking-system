@@ -8,12 +8,12 @@ const Navbar = () => {
 
   const [showMenu, setShowMenu] = useState(false);
 
-  const { token, setToken , userData } = useContext(AppContext)
-  
+  const { token, setToken, userData } = useContext(AppContext);
+
   const logout = () => {
-    setToken(false)
-    localStorage.removeItem('token')
-  }
+    setToken(false);
+    localStorage.removeItem("token");
+  };
 
   return (
     <div className="flex justify-between text-center border-b border-gray-300 text-sm mb-5 py-4">
@@ -86,7 +86,10 @@ const Navbar = () => {
           <div className="fixed top-0 right-0 bottom-0 w-full h-screen bg-white z-50 md:hidden transition-all">
             {/* Header with Logo and Close Button */}
             <div className="flex justify-between items-center px-5 py-6 border-b border-gray-200">
-              <img src={assets.logo} alt="Logo" className="h-8" />
+              <NavLink to="/" className="flex gap-2 text-2xl ">
+                <i className="fa-solid fa-user-doctor text-teal-600  text-4xl"></i>
+                <h1 className="text-teal-800">Prescripto</h1>
+              </NavLink>
               <img
                 onClick={() => setShowMenu(false)}
                 src={assets.cross_icon}
@@ -97,28 +100,16 @@ const Navbar = () => {
 
             {/* Menu Links */}
             <ul className="flex flex-col gap-6 px-6 py-10 text-lg text-gray-700 font-medium">
-              <NavLink
-                to="/"
-                onClick={() => setShowMenu(false)}
-              >
+              <NavLink to="/" onClick={() => setShowMenu(false)}>
                 <p className="rounded py-1">Home</p>
               </NavLink>
-              <NavLink
-                to="/doctors"
-                onClick={() => setShowMenu(false)}
-              >
+              <NavLink to="/doctors" onClick={() => setShowMenu(false)}>
                 <p className="py-1 rounded">All Doctors</p>
               </NavLink>
-              <NavLink
-                to="/about"
-                onClick={() => setShowMenu(false)}
-              >
+              <NavLink to="/about" onClick={() => setShowMenu(false)}>
                 <p className="py-1 rounded">About</p>
               </NavLink>
-              <NavLink
-                to="/contact"
-                onClick={() => setShowMenu(false)}
-              >
+              <NavLink to="/contact" onClick={() => setShowMenu(false)}>
                 <p className="rounded py-1">Contact</p>
               </NavLink>
             </ul>

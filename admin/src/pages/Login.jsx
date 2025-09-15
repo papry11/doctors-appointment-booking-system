@@ -1,62 +1,72 @@
-import React, { useContext, useState } from 'react'
-import { assets } from '../assets/assets'
-import { AdminContext } from '../context/AdminContext'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useState } from "react";
+import { assets } from "../assets/assets";
+import { AdminContext } from "../context/AdminContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { DoctorContext } from "../context/DoctorContext";
 
 const Login = () => {
-  const [state, setState] = useState('Admin')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const { setAToken, backendUrl } = useContext(AdminContext)
-  const navigate = useNavigate()
+  const [state, setState] = useState("Admin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { setAToken, backendUrl } = useContext(AdminContext);
+  const { setDToken } = useContext(DoctorContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-
-
-      if (state === 'Admin') {
-        const { data } = await axios.post(`${backendUrl}/api/admin/login`, { email, password })
-
+      if (state === "Admin") {
+        const { data } = await axios.post(`${backendUrl}/api/admin/login`, {
+          email,
+          password,
+        });
 
         if (data.success) {
-          localStorage.setItem('aToken', data.token)
-          setAToken(data.token)
-          toast.success('Admin login successful')
-          navigate('/admin/dashboard')
+          // ✅ Save only Admin token
+          localStorage.setItem("aToken", data.token);
+          localStorage.removeItem("dToken");
+
+          setAToken(data.token);
+          toast.success("Admin login successful");
+          navigate("/admin/dashboard");
         } else {
-          toast.error(data.message)
+          toast.error(data.message);
         }
-      }
+      } else {
+        const { data } = await axios.post(`${backendUrl}/api/doctor/login`, {
+          email,
+          password,
+        });
 
-      if (state === 'Doctor') {
-        const { data } = await axios.post(`${backendUrl}/api/doctor/login`, { email, password })
         if (data.success) {
-          localStorage.setItem('aToken', data.token)
-          setAToken(data.token)
-          toast.success('Doctor login successful')
-          navigate('/doctor/dashboard')
+          // ✅ Save only Doctor token
+          localStorage.setItem("dToken", data.token);
+          localStorage.removeItem("aToken");
+
+          setDToken(data.token);
+          toast.success("Doctor login successful");
+          navigate("/doctor/dashboard");
         } else {
-          toast.error(data.message)
+          toast.error(data.message);
         }
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Login failed')
-      console.error(error)
+      toast.error(error.response?.data?.message || "Login failed");
+      console.error(error);
     }
-  }
-
-
-
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <form
+      onSubmit={handleSubmit}
+      className="min-h-screen flex items-center justify-center bg-gray-100 px-4"
+    >
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
         <p className="text-2xl font-bold text-center text-gray-500 mb-6">
-          <span className='text-teal-600'>{state} </span>Login
+          <span className="text-teal-600">{state} </span>Login
         </p>
 
         <div className="mb-4">
@@ -91,17 +101,23 @@ const Login = () => {
         </button>
 
         <p className="text-center text-sm text-gray-600 mt-4">
-          {state === 'Admin' ? (
+          {state === "Admin" ? (
             <>
               Doctor Login?{" "}
-              <span onClick={() => setState('Doctor')} className="text-teal-600 hover:underline cursor-pointer font-medium">
+              <span
+                onClick={() => setState("Doctor")}
+                className="text-teal-600 hover:underline cursor-pointer font-medium"
+              >
                 Click here
               </span>
             </>
           ) : (
             <>
               Admin Login?{" "}
-              <span onClick={() => setState('Admin')} className="text-teal-600 hover:underline cursor-pointer font-medium">
+              <span
+                onClick={() => setState("Admin")}
+                className="text-teal-600 hover:underline cursor-pointer font-medium"
+              >
                 Click here
               </span>
             </>
@@ -109,8 +125,7 @@ const Login = () => {
         </p>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default Login
-
+export default Login;

@@ -5,7 +5,7 @@ import { AppContext } from "../context/AppContext";
 const Doctors = () => {
   const { speciality } = useParams();
   const { doctors } = useContext(AppContext);
-  const [showFilter,SetShowFilter] = useState(false)
+  const [showFilter, SetShowFilter] = useState(false);
   const [filterDoc, setFilterDoc] = useState([]);
   const navigate = useNavigate();
 
@@ -28,15 +28,24 @@ const Doctors = () => {
       </p>
 
       <div className="flex flex-col sm:flex-row gap-10 items-start mt-5">
-        <button className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${showFilter ? 'bg-teal-600 text-white' : ''}`} onClick={()=>SetShowFilter(prev => !prev)}>Filters</button>
+        <button
+          className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${
+            showFilter ? "bg-teal-600 text-white" : ""
+          }`}
+          onClick={() => SetShowFilter((prev) => !prev)}
+        >
+          Filters
+        </button>
         {/* Speciality List */}
-        <div className={`flex flex-col gap-4 text-sm text-gray-600 w-full sm:w-1/4 ${showFilter ? 'flex' : 'hidden sm:flex'}`}>
+        <div
+          className={`flex flex-col gap-4 text-sm text-gray-600 w-full sm:w-1/4 ${
+            showFilter ? "flex" : "hidden sm:flex"
+          }`}
+        >
           <p
             onClick={() => navigate("/doctors/General physician")}
             className={`cursor-pointer border border-gray-300 px-4 py-2 rounded-md transition ${
-              speciality === "General physician"
-                ? "bg-teal-600 text-white"
-                : ""
+              speciality === "General physician" ? "bg-teal-600 text-white" : ""
             }`}
           >
             General physician
@@ -44,9 +53,7 @@ const Doctors = () => {
           <p
             onClick={() => navigate("/doctors/Gynecologist")}
             className={`cursor-pointer border border-gray-300 px-4 py-2 rounded-md transition ${
-              speciality === "Gynecologist"
-                ? "bg-teal-600 text-white"
-                : ""
+              speciality === "Gynecologist" ? "bg-teal-600 text-white" : ""
             }`}
           >
             Gynecologist
@@ -54,9 +61,7 @@ const Doctors = () => {
           <p
             onClick={() => navigate("/doctors/Dermatologist")}
             className={`cursor-pointer border border-gray-300 px-4 py-2 rounded-md transition ${
-              speciality === "Dermatologist"
-               ? "bg-teal-600 text-white"
-                : ""
+              speciality === "Dermatologist" ? "bg-teal-600 text-white" : ""
             }`}
           >
             Dermatologist
@@ -64,9 +69,7 @@ const Doctors = () => {
           <p
             onClick={() => navigate("/doctors/Pediatricians")}
             className={`cursor-pointer border border-gray-300 px-4 py-2 rounded-md transition ${
-              speciality === "Pediatricians"
-                ? "bg-teal-600 text-white"
-                : ""
+              speciality === "Pediatricians" ? "bg-teal-600 text-white" : ""
             }`}
           >
             Pediatricians
@@ -74,9 +77,7 @@ const Doctors = () => {
           <p
             onClick={() => navigate("/doctors/Neurologist")}
             className={`cursor-pointer border border-gray-300 px-4 py-2 rounded-md transition ${
-              speciality === "Neurologist"
-                ? "bg-teal-600 text-white"
-                : ""
+              speciality === "Neurologist" ? "bg-teal-600 text-white" : ""
             }`}
           >
             Neurologist
@@ -107,10 +108,17 @@ const Doctors = () => {
                 className="w-full h- object-contain p-4 bg-blue-50"
               />
               <div className="px-4 py-4 bg-white">
-                <p className="text-sm text-green-600 font-medium flex items-center gap-1">
-                  <span className="h-2 w-2 rounded-full bg-green-500 inline-block"></span>{" "}
-                  Available
-                </p>
+                {item.available ? (
+                  <p className="text-sm text-green-600 font-medium flex items-center gap-1">
+                    <span className="h-2 w-2 rounded-full bg-green-500 inline-block"></span>{" "}
+                    Available
+                  </p>
+                ) : (
+                  <p className="text-sm text-red-600 font-medium flex items-center gap-1">
+                    <span className="h-2 w-2 rounded-full bg-red-500 inline-block"></span>{" "}
+                    Unavailable
+                  </p>
+                )}
                 <p className="font-semibold mt-1">{item.name}</p>
                 <p className="text-sm text-gray-500">{item.speciality}</p>
               </div>
