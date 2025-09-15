@@ -21,7 +21,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="m-4 sm:m-6 space-y-8 sm:space-y-10">
+    <div className="m-4 sm:m-6 w-full max-w-3xl space-y-8 sm:space-y-10">
       {/* Top Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Doctors */}

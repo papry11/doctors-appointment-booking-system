@@ -4,7 +4,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const MyAppointments = () => {
- const { userData, backendUrl, token , getDoctorsData } = useContext(AppContext);
+  const { userData, backendUrl, token, getDoctorsData } =
+    useContext(AppContext);
 
   const [appointments, setAppointments] = useState([]);
 
@@ -48,26 +49,25 @@ const MyAppointments = () => {
   };
 
   const cancelAppointment = async (appointmentId) => {
-  try {
-    const { data } = await axios.post(
-      backendUrl + "/api/user/cancel-appointment",
-      { appointmentId, userId: userData._id },
-      { headers: { token } }
-    );
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/api/user/cancel-appointment",
+        { appointmentId, userId: userData._id },
+        { headers: { token } }
+      );
 
-    if (data.success) {
-      toast.success(data.message);
-      getUserAppointments();
-      getDoctorsData()
-    } else {
-      toast.error(data.message);
+      if (data.success) {
+        toast.success(data.message);
+        getUserAppointments();
+        getDoctorsData();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
     }
-  } catch (error) {
-    console.log(error);
-    toast.error(error.message);
-  }
-};
-
+  };
 
   useEffect(() => {
     if (token) {
@@ -92,7 +92,7 @@ const MyAppointments = () => {
               <img
                 src={item.docData.image}
                 alt={item.docData.name}
-                className="w-full h-32 object-cover rounded-lg border border-gray-200"
+                className="w-full h-auto sm:h-32 object-cover rounded-lg border border-gray-200"
               />
             </div>
 
@@ -119,21 +119,29 @@ const MyAppointments = () => {
             {/* Action Buttons */}
             {/* Action Buttons */}
             <div className="flex flex-col gap-2 mt-4 sm:mt-0 sm:ml-auto w-full sm:w-auto">
-              {!item.cancelled && !item.isCompleted &&
+              {!item.cancelled && !item.isCompleted && (
                 <button className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md text-sm transition">
                   Pay Online
                 </button>
-              }
-              {!item.cancelled && !item.isCompleted &&
+              )}
+              {!item.cancelled && !item.isCompleted && (
                 <button
                   onClick={() => cancelAppointment(item._id)}
                   className="bg-white text-gray-700 hover:bg-red-600 border border-gray-300 hover:text-white px-4 py-2 rounded-md text-sm transition"
                 >
                   Cancel Appointment
                 </button>
-              }
-              {item.cancelled && !item.isCompleted && <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-600">Appoinment Cancelled</button>}
-              {item.isCompleted && <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">Completed</button>}
+              )}
+              {item.cancelled && !item.isCompleted && (
+                <button className="sm:min-w-48 py-2 border border-red-500 rounded text-red-600">
+                  Appoinment Cancelled
+                </button>
+              )}
+              {item.isCompleted && (
+                <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">
+                  Completed
+                </button>
+              )}
             </div>
           </div>
         ))}

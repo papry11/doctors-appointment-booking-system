@@ -22,7 +22,7 @@ function Doctordashboard() {
 
   return (
     dashData && (
-      <div className="m-5">
+      <div className="m-5 w-full max-w-3xl">
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Earnings */}

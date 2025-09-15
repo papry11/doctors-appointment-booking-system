@@ -79,7 +79,7 @@ const AddDoctor = () => {
 
 
   return (
-    <form onSubmit={onSubmitHandler} className="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-6 space-y-6 mt-8">
+    <form onSubmit={onSubmitHandler} className="max-w-2xl mx-2 bg-white shadow-md rounded-xl p-6 space-y-6  mt-8">
       <p className="text-xl font-semibold text-teal-600">Add Doctor</p>
 
       {/* Upload Image */}

@@ -13,7 +13,7 @@ const DoctorList = () => {
   
 
   return (
-<div className="m-5 max-h-[90vh] ">
+<div className="m-5 max-h-[90vh] w-full max-w-5xl">
   <h1 className="text-2xl font-semibold text-teal-600 mb-6">All Doctors</h1>
 
   <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
