@@ -43,8 +43,8 @@ const DoctorProfile = () => {
   }
 
   return profileData && (
-    <div className="p-6 flex justify-center">
-      <div className="w-full max-w-3xl bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl shadow-md p-8">
+    <div className="p-6 flex justify-center w-full max-w-3xl">
+      <div className=" bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl shadow-md p-8">
         
         {/* Top Section */}
         <div className="flex flex-col items-center text-center gap-4">
