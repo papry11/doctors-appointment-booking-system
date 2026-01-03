@@ -37,9 +37,11 @@ const addDoctor = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         //  Upload image to Cloudinary
-        const uploadedImage = await cloudinary.uploader.upload(imageFile.path, {
-            resource_type: "image"
-        });
+        const uploadedImage = await cloudinary.uploader.upload(
+    `data:${imageFile.mimetype};base64,${imageFile.buffer.toString('base64')}`,
+    { resource_type: "image" }
+);
+
         const imageUrl = uploadedImage.secure_url;
 
         //  Save doctor to database
@@ -52,7 +54,8 @@ const addDoctor = async (req, res) => {
             experience,
             about,
             fees,
-            address:JSON.parse(address),
+            // address:JSON.parse(address),
+            address: address,
             image: imageUrl,
             date:Date.now()
         });
@@ -67,8 +70,13 @@ const addDoctor = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
-        res.json({ success: false, message: "Internal server error" });
+        console.error("ADD DOCTOR ERROR 👉", error);
+    res.status(500).json({
+        success: false,
+        message: error.message,
+        stack: error.stack
+    });
+
     }
 };
 
